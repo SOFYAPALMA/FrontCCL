@@ -8,7 +8,7 @@ export const routes: Routes = [
     {path:'',component:InicioComponent},
     {path:'inicio',component:InicioComponent},
     {path:'nuevo',component:NuevoComponent},
-    {path:'login',component:LoginComponent},
+    {path: 'login', component:LoginComponent},     
     {path:'productos/:id',component:ProductosComponent},
     
 ];
