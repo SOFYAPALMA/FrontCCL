@@ -1,1 +1,44 @@
-<p>inicio works!</p>
+<mat-card style="width: 40%; margin: 50px auto">
+    <mat-card-header style="background-color: black; color: white">
+    <mat-card-title><p>Visualizacion de inventario CCL</p></mat-card-title>
+</mat-card-header>
+<mat-card-content>
+    <div class="header-container">
+        <h2>Productos</h2>              
+      </div>
+
+    <table
+      mat-table
+      [dataSource]="listaProductos"
+      matSort
+      class="mat-elevation-z5"
+      style="margin: top 50px"
+    >
+    <!-- id Column -->
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+        <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+      </ng-container>
+
+      <!-- nombre Column -->
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+        <td mat-cell *matCellDef="let row">{{ row.nombre }}</td>
+      </ng-container>
+
+      <!-- cantidad Column -->
+      <ng-container matColumnDef="cantidad">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Cantidad</th>
+        <td mat-cell *matCellDef="let row">{{ row.cantidad }}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+         <!-- <button mat-flat-button class="red-text" (click)="nuevo(row.id)">
+        Nuevo Producto
+    </button> -->
+    </table>
+ 
+    
+</mat-card-content>
+
+
