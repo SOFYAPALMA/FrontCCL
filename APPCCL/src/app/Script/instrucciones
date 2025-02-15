@@ -1,0 +1,7 @@
+// Instrucciones.
+// 1. realizar la clonacion de los proyectos BackEndCCL y FrontEndCCL y ejecutar el Script de base de datos adjunto en VSC en carpeta Script - script.sql
+// 2. ingresar al VSC (visual studio code) y ejecutar la app ng serve --o
+// 3. registrarse con las siguientes credenciales:
+// *Email:spalma@ccl.com.co
+// *Pasword: password
+// al ingresar la pantalla inicial solita las credenciales y luego de ello los botones le redireccionan a guardar.
