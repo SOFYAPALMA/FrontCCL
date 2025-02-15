@@ -14,6 +14,7 @@
       class="mat-elevation-z5"
       style="margin: top 50px"
     >
+    
     <!-- id Column -->
     <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
@@ -33,11 +34,14 @@
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-         <!-- <button mat-flat-button class="red-text" (click)="nuevo(row.id)">
-        Nuevo Producto
-    </button> -->
+    
     </table>
- 
+    <br><div class="container-auth-form-btn">
+      <div style="text-align:center">
+        <button mat-raised-button color="primary" [class.auth-spinner]="loading" [disabled]="loading"
+        class="auth-form-btn" (click)="Ir()">Crear Producto</button>
+      </div>
+    </div> 
     
 </mat-card-content>
 

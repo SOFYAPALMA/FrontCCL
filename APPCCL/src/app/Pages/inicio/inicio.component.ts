@@ -6,6 +6,9 @@ import { Productos } from '../../Models/Productos';
 import { ProductosService } from '../../Services/productos.service';
 import { Router } from '@angular/router';
 import { MatSort, MatSortModule } from '@angular/material/sort';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
 
 @Component({
   selector: 'app-inicio',
@@ -14,7 +17,9 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
     MatCardModule,
     MatTableModule,
     MatButtonModule,
-    MatSortModule
+    MatSortModule,
+    RouterModule
+
   ],
   templateUrl: './inicio.component.html',
   styleUrl: './inicio.component.css'
@@ -28,6 +33,11 @@ export class InicioComponent implements OnInit {
     'nombre',
     'cantidad',
   ];
+   
+  submitted = false;
+  loading = false;
+  error = '';
+  hide = true;  
   
   constructor(private router: Router){}
 
@@ -53,11 +63,9 @@ export class InicioComponent implements OnInit {
     });
   }
 
-  nuevo(id: string) {
-    this.router.navigate(['/nuevo'], { queryParams: { id: id ?? '0' } });
-  }
-  ver(name: string) {
-    this.router.navigate(['/ver'], { queryParams: { username: name } });
+  Ir() {
+    console.log("Ir");
+    this.router.navigate(['/nuevo']);
   }
 
 }

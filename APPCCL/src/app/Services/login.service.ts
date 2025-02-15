@@ -13,21 +13,10 @@ import { RespuestaAPI } from '../Models/RespuestaAPI';
   providedIn: 'root',
 })
 export class AuthService {
-  private currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;
-
   private readonly API_URL = 'https://localhost:7143';
 
   constructor(private httpClient: HttpClient) {
     //console.log("ctr auth service");
-    this.currentUserSubject = new BehaviorSubject<User>(
-      JSON.parse(localStorage.getItem('currentUser') || '{}')
-    );
-    this.currentUser = this.currentUserSubject.asObservable();
-  }
-
-  public get currentUserValue(): User {
-    return this.currentUserSubject.value;
   }
 
   iniciarSesion(usuario: User): Observable<RespuestaAPI> {
@@ -60,7 +49,6 @@ export class AuthService {
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('jwt');
-    this.currentUserSubject.next(this.currentUserValue);
     return of({ success: false });
   }
 }

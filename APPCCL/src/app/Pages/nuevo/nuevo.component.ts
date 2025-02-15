@@ -46,7 +46,7 @@ export class NuevoComponent implements OnInit {
   ngOnInit() {
 
     this.authForm = this.formBuilder.group({
-      nombre: ['', [Validators.required, Validators.email]],
+      nombre: ['', Validators.required],
       cantidad: ['', Validators.required], 
     });
   }
@@ -65,17 +65,17 @@ export class NuevoComponent implements OnInit {
       this.loading = false;
       return;
     } else {  
-      // this.nuevoService.nuevoProducto(this.authForm.value).subscribe({
-      //   next: (response: any) => {
-      //     console.log('Login exitoso', response);
-      //     localStorage.setItem('currentUser', JSON.stringify(response));
-      //     this.router.navigate(['/inicio']);
-      //   },
-      //   error: () => {
-      //     this.error = 'Usuario y/o contraseña incorrectos';
-      //     this.loading = false;
-      //   }
-      // });   
+      this.nuevoService.nuevoProducto(this.authForm.value).subscribe({
+        next: (response: any) => {
+          console.log('Login exitoso', response);
+          localStorage.setItem('currentUser', JSON.stringify(response));
+          this.router.navigate(['/inicio']);
+        },
+        error: () => {
+          this.error = 'Usuario y/o contraseña incorrectos';
+          this.loading = false;
+        }
+      });   
     }
   }
 
