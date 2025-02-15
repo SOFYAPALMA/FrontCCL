@@ -14,7 +14,7 @@
                   <div class="col-12 mb-2">
                     <mat-form-field class="example-full-width" appearance="outline">
                       <mat-label>Email Usuario</mat-label>
-                      <input matInput formControlName="email" />
+                      <input matInput formControlName="email" value="spalma@ccl.com.co" />
                       <mat-icon class="material-icons-outlined p-3" matSuffix>face</mat-icon>
                       <mat-error *ngIf="f['email']?.hasError('required')">Email requerido</mat-error>
                       <mat-error *ngIf="f['email']?.hasError('email')">Email no válido</mat-error>

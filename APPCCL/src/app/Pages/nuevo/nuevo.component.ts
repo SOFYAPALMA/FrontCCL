@@ -8,9 +8,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-
 import { Subscription } from 'rxjs';  
-import { AuthService } from '../../Services/login.service';
+import { NuuevoService } from '../../Services/nuevo.service';
 
 @Component({
   selector: 'app-nuevo',
@@ -28,7 +27,7 @@ import { AuthService } from '../../Services/login.service';
   ],
 })
 
-export class LoginComponent implements OnInit {
+export class NuevoComponent implements OnInit {
   subscription: Subscription = new Subscription();
   authForm!: UntypedFormGroup;
  
@@ -41,14 +40,14 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: UntypedFormBuilder,
     private router: Router,
-    private authService: AuthService
+    private nuevoService: NuuevoService
   ) {}
 
   ngOnInit() {
 
     this.authForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required], 
+      nombre: ['', [Validators.required, Validators.email]],
+      cantidad: ['', Validators.required], 
     });
   }
 
@@ -62,26 +61,26 @@ export class LoginComponent implements OnInit {
 
    
     if (this.authForm.invalid) {
-      this.error = 'Usuario y/o contraseña invalida';
+      this.error = 'Error en la creacion de nuevo producto';
       this.loading = false;
       return;
     } else {  
-      this.authService.iniciarSesion(this.authForm.value).subscribe({
-        next: (response: any) => {
-          console.log('Login exitoso', response);
-          localStorage.setItem('currentUser', JSON.stringify(response));
-          this.router.navigate(['/inicio']);
-        },
-        error: () => {
-          this.error = 'Usuario y/o contraseña incorrectos';
-          this.loading = false;
-        }
-      });   
+      // this.nuevoService.nuevoProducto(this.authForm.value).subscribe({
+      //   next: (response: any) => {
+      //     console.log('Login exitoso', response);
+      //     localStorage.setItem('currentUser', JSON.stringify(response));
+      //     this.router.navigate(['/inicio']);
+      //   },
+      //   error: () => {
+      //     this.error = 'Usuario y/o contraseña incorrectos';
+      //     this.loading = false;
+      //   }
+      // });   
     }
   }
 
-  Ir() {
-    console.log("Ir");
+  Guardar() {
+    console.log("Guardar");
     this.router.navigate(['/inicio']);
   }
 }

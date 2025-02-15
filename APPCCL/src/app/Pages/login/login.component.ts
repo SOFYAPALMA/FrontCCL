@@ -11,6 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { Subscription } from 'rxjs';  
 import { AuthService } from '../../Services/login.service';
+import { RespuestaAPI } from '../../Models/RespuestaAPI';
 
 @Component({
   selector: 'app-login',
@@ -67,10 +68,18 @@ export class LoginComponent implements OnInit {
       return;
     } else {  
       this.authService.iniciarSesion(this.authForm.value).subscribe({
-        next: (response: any) => {
-          console.log('Login exitoso', response);
-          localStorage.setItem('currentUser', JSON.stringify(response));
-          this.router.navigate(['/inicio']);
+        next: (response: RespuestaAPI) => {
+          if(response.success)
+          {
+            console.log('Login exitoso', response.data);
+            localStorage.setItem('jwt', response.data.toString());
+            this.router.navigate(['/inicio']);
+          }
+          else
+          {
+            this.error = 'Usuario y/o contraseña incorrectos';
+            this.loading = false;
+          }
         },
         error: () => {
           this.error = 'Usuario y/o contraseña incorrectos';

@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpParams,
+  HttpResponse,
+} from '@angular/common/http';
+import { BehaviorSubject, Observable, of, Subscriber, throwError } from 'rxjs';
 import { User } from '../Models/Login';
-
-
+import { RespuestaAPI } from '../Models/RespuestaAPI';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +16,7 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
-  private readonly API_URL = 'https://localhost:7143/api';
+  private readonly API_URL = 'https://localhost:7143';
 
   constructor(private httpClient: HttpClient) {
     //console.log("ctr auth service");
@@ -26,32 +30,37 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
+  iniciarSesion(usuario: User): Observable<RespuestaAPI> {
+    console.log(' auth 1', usuario);
 
-  iniciarSesion(usuario: User): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
+        'Content-Type': 'application/json',
+      }),
     };
 
-    let user = this.httpClient.post<any>(this.API_URL + '/Validate', usuario, httpOptions);
-    console.log(" auth service", user);
-    return user;
+    return new Observable((subscriber) => {
+      this.httpClient
+        .post<RespuestaAPI>(
+          this.API_URL +
+            '/Validate?Email=' +
+            usuario.email +
+            '&Clave=' +
+            usuario.password,
+          {}
+        )
+        .subscribe((data) => {
+          //some stuff
+          console.log('auth service', data);
+          subscriber.next(data);
+        });
+    });
   }
 
-  ok(body?: {
-    id: number;
-    email: string;
-    password: number;
-    name: string;   
-    token: string;
-    
-  }) {
-    return of(new HttpResponse({ status: 200, body }));
+  logout() {
+    // remove user from local storage to log user out
+    localStorage.removeItem('jwt');
+    this.currentUserSubject.next(this.currentUserValue);
+    return of({ success: false });
   }
-  error(message: string) {
-    return throwError(message);
-  }
-
-  
 }
