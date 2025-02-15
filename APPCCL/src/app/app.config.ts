@@ -12,3 +12,5 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(HttpClientModule)
   ]
 };
+
+// permite que la URL reciba parametros withComponentInputBinding
