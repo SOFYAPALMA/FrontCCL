@@ -8,7 +8,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
+
 import { Subscription } from 'rxjs';  
+import { AuthService } from '../../Services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -35,9 +37,11 @@ export class LoginComponent implements OnInit {
   error = '';
   hide = true;  
 
+
   constructor(
     private formBuilder: UntypedFormBuilder,
     private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -62,9 +66,17 @@ export class LoginComponent implements OnInit {
       this.loading = false;
       return;
     } else {  
-      // Aquí iría la llamada al servicio de autenticación
-      // Ejemplo:
-      // this.subscription = this.authService.iniciarSesion(this.authForm.value).subscribe(...);
+      this.authService.iniciarSesion(this.authForm.value).subscribe({
+        next: (response: any) => {
+          console.log('Login exitoso', response);
+          localStorage.setItem('currentUser', JSON.stringify(response));
+          this.router.navigate(['/inicio']);
+        },
+        error: () => {
+          this.error = 'Usuario y/o contraseña incorrectos';
+          this.loading = false;
+        }
+      });   
     }
   }
 
